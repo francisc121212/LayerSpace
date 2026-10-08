@@ -1,0 +1,47 @@
+{
+  "name": "layerspace",
+  "version": "1.0.0",
+  "description": "LayerSpace - ferramenta 3D para educacao artistica.",
+  "private": true,
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win portable"
+  },
+  "dependencies": {
+    "aframe": "1.5.0"
+  },
+  "devDependencies": {
+    "electron": "latest",
+    "electron-builder": "latest"
+  },
+  "build": {
+    "appId": "com.layerspace.app",
+    "productName": "LayerSpace",
+    "asar": true,
+    "files": [
+      "index.html",
+      "script.js",
+      "style.css",
+      "main.js",
+      "package.json",
+      "node_modules/aframe/dist/**"
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "portable": {
+      "artifactName": "LayerSpace.exe"
+    }
+  }
+}

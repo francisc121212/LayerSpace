@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LayerSpace - Ferramenta 3D para Educação Artística</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="node_modules/aframe/dist/aframe-v1.5.0.min.js"></script>
+</head>
+<body>
+  <aside class="panel" aria-label="Painel de controlo das camadas">
+    <header class="brand">
+      <p class="eyebrow">Protótipo experimental</p>
+      <h1>LayerSpace</h1>
+      <p class="intro">
+        Composição visual em camadas 3D para explorar profundidade, escala e organização espacial.
+      </p>
+    </header>
+
+    <section class="block">
+      <label class="field-label" for="layerSelect">Camada ativa</label>
+      <select id="layerSelect">
+        <option value="background">Fundo</option>
+        <option value="layer1">Camada 1</option>
+        <option value="layer2">Camada 2</option>
+        <option value="layer3">Camada 3</option>
+      </select>
+    </section>
+
+    <section class="block">
+      <label class="upload-box" for="imageUpload">
+        <span>Carregar imagem</span>
+        <small>PNG, JPG, WebP ou GIF</small>
+      </label>
+      <input id="imageUpload" type="file" accept="image/*">
+      <p id="fileName" class="file-name">Nenhuma imagem carregada nesta camada.</p>
+    </section>
+
+    <section class="block controls" aria-label="Transformações da camada">
+      <div class="control-row">
+        <label for="posX">Mover X</label>
+        <input id="posX" type="range" min="-6" max="6" step="0.1">
+        <output id="posXValue"></output>
+      </div>
+
+      <div class="control-row">
+        <label for="posY">Mover Y</label>
+        <input id="posY" type="range" min="-3.5" max="3.5" step="0.1">
+        <output id="posYValue"></output>
+      </div>
+
+      <div class="control-row">
+        <label for="posZ">Profundidade Z</label>
+        <input id="posZ" type="range" min="-7" max="1" step="0.1">
+        <output id="posZValue"></output>
+      </div>
+
+      <div class="control-row">
+        <label for="scale">Escala</label>
+        <input id="scale" type="range" min="0.2" max="5" step="0.05">
+        <output id="scaleValue"></output>
+      </div>
+
+      <div class="control-row">
+        <label for="rotation">Rotação</label>
+        <input id="rotation" type="range" min="-180" max="180" step="1">
+        <output id="rotationValue"></output>
+      </div>
+    </section>
+
+    <section class="button-grid" aria-label="Ações da camada e exportação">
+      <button id="visibilityButton" type="button">Ocultar camada</button>
+      <button id="resetButton" type="button">Repor camada</button>
+      <button id="exportButton" type="button">Exportar imagem</button>
+      <button id="centerCameraButton" type="button">Recentrar vista</button>
+    </section>
+
+    <section class="layer-list" aria-label="Resumo das camadas">
+      <h2>Camadas</h2>
+      <div id="layerSummary"></div>
+    </section>
+  </aside>
+
+  <main class="scene-wrap" aria-label="Cena 3D">
+    <a-scene
+      id="scene"
+      embedded
+      background="color: #eef2f1"
+      renderer="antialias: true; preserveDrawingBuffer: true; colorManagement: true"
+      screenshot="width: 1920; height: 1080">
+
+      <a-assets id="assets"></a-assets>
+
+      <a-entity id="layerRig">
+        <a-plane
+          id="plane-background"
+          class="editable-plane"
+          position="0 0 -4.6"
+          width="7.5"
+          height="4.2"
+          material="color: #dfe7e4; opacity: 0.82; transparent: true; side: double">
+        </a-plane>
+
+        <a-plane
+          id="plane-layer1"
+          class="editable-plane"
+          position="-0.8 0.25 -3.2"
+          width="3.6"
+          height="2.4"
+          material="color: #f4b860; opacity: 0.72; transparent: true; side: double">
+        </a-plane>
+
+        <a-plane
+          id="plane-layer2"
+          class="editable-plane"
+          position="0.65 -0.05 -2.3"
+          width="3.2"
+          height="2.1"
+          material="color: #70a9a1; opacity: 0.72; transparent: true; side: double">
+        </a-plane>
+
+        <a-plane
+          id="plane-layer3"
+          class="editable-plane"
+          position="0.25 0.55 -1.35"
+          width="2.8"
+          height="1.9"
+          material="color: #d95d39; opacity: 0.72; transparent: true; side: double">
+        </a-plane>
+      </a-entity>
+
+      <a-plane
+        position="0 -2.35 -3"
+        rotation="-90 0 0"
+        width="14"
+        height="10"
+        material="color: #c8d2cf; opacity: 0.28; transparent: true; side: double">
+      </a-plane>
+
+      <a-entity light="type: ambient; intensity: 0.8"></a-entity>
+      <a-entity light="type: directional; intensity: 0.55" position="-2 4 3"></a-entity>
+
+      <a-entity
+        id="cameraRig"
+        position="0 0 3.6"
+        camera
+        look-controls="enabled: true"
+        wasd-controls="enabled: true; acceleration: 14">
+      </a-entity>
+    </a-scene>
+
+    <div class="scene-label">
+      <strong>Arraste a vista</strong>
+      <span>WASD para navegar | rato para olhar | botão VR se disponível</span>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
